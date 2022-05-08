@@ -7,11 +7,19 @@
 
 int main()
 {
-	CFileWriter writer("filename");
+	CFileWriter writer{"filename"};
 	CClient c(&writer);
+
+	auto handler1{
+		writer.GetWriteEvent()+=[](int pos, int length){
+			std::cout << "lambda: write " << pos << ", " << length << std::endl;
+		}
+	};
+	c.DoProcess();
+	writer.GetWriteEvent()-=handler1;
 	c.DoProcess();
 
-	CFileWriter lazyWriter("filename", StrategyTag::LAZY);
+	CFileWriter lazyWriter{"filename", StrategyTag::LAZY};
 	CClient c1(&lazyWriter);
 	c1.DoProcess();
 

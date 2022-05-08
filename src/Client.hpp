@@ -23,6 +23,8 @@ public:
 	m_writer->WriteAtBegin(buf.data(),BUF_SIZE);
 	buf.fill('B');
 	m_writer->WriteAt(BUF_SIZE/4, buf.data(),BUF_SIZE/2);
+	buf.fill('E');
+	m_writer->WriteEnd(buf.data(), BUF_SIZE/2);
 	return true;
 	}
 private:

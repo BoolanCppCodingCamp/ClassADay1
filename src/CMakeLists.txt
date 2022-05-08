@@ -15,7 +15,7 @@ set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fsanitize=address")
 
 include_directories(${PROJECT_SOURCE_DIR})
 #add_executable(writer main.cpp Client.cpp FileWriter.cpp MemoryWriter.cpp TestWriter.cpp) 
-add_executable(writer main.cpp) 
+add_executable(writer main.cpp FileWriter.cpp) 
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

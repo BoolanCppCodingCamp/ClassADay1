@@ -6,34 +6,15 @@
 #include "IWriteStrategy.hpp"
 #include "NormalStrategy.hpp"
 #include "LazyStrategy.hpp"
+#include "Observable.hpp"
 
-
-class CFileWriter : public IWriter
+class CFileWriter : public IWriter, public Observable
 {
 public:
-	CFileWriter(const std::string& filename, StrategyTag tag = StrategyTag::NORMAL):
-	m_fileName(filename)
-	{
-		if ( tag == StrategyTag::NORMAL )
-		{
-			m_pStrategy = new NormalStrategy{};
-		}
-		else
-		{
-			m_pStrategy = new LazyStrategy{};
-		}
-
-	}
+	CFileWriter(const std::string& filename, StrategyTag tag = StrategyTag::NORMAL);
 
 	CFileWriter() = delete;
-
-	~CFileWriter()  
-	{
-		if ( m_pStrategy != nullptr )
-		{
-			delete m_pStrategy;
-		}
-	}
+	~CFileWriter();
 
 	CFileWriter(const CFileWriter&) = delete;
 	CFileWriter& operator=(const CFileWriter&) = delete;
@@ -41,29 +22,17 @@ public:
 	CFileWriter& operator=(CFileWriter&&) = delete;
 
 // IWriter interfaces
-	int WriteAtBegin(void* data, int length) override {
-		m_pStrategy->OnWriteAt(0, data, length);
-		std::cout << "write" << length << " bytes at file begin" << std::endl;
-		return length;
-	}
+	int WriteAtBegin(void* data, int length) override;
+	
 
-	int WriteAt(int pos, void* data, int length) override{
-		m_pStrategy->OnWriteAt(0, data, length);
-		std::cout << "write" << length << " bytes at" << std::endl;
-		return length;
-	}
+	int WriteAt(int pos, void* data, int length) override;
 
 
-	int WriteEnd(void* data, int length) override{
-		m_pStrategy->OnWriteAt(0, data, length);
-		std::cout << "write" << length << " bytes at file end" << std::endl;
-		return length;
-	}
+	int WriteEnd(void* data, int length) override;
 private:
-	std::string m_fileName;
+	struct FileWriterImpl;
+	FileWriterImpl* m_pImpl;
 	IWriteStrategy* m_pStrategy = nullptr;
-
 };
-
 
 #endif
