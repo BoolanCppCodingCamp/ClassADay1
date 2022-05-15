@@ -19,8 +19,8 @@ int main()
 	writer.GetWriteEvent()-=handler1;
 	c.DoProcess();
 
-	CFileWriter lazyWriter{"filename", StrategyTag::LAZY};
-	CClient c1(&lazyWriter);
+	CFileWriter Writer{"filename"};
+	CClient c1(&Writer);
 	c1.DoProcess();
 
 	CMemWriter mWriter{};

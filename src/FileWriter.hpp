@@ -4,14 +4,12 @@
 #include <string>
 #include "IWriter.hpp"
 #include "IWriteStrategy.hpp"
-#include "NormalStrategy.hpp"
-#include "LazyStrategy.hpp"
 #include "Observable.hpp"
 
 class CFileWriter : public IWriter, public Observable
 {
 public:
-	CFileWriter(const std::string& filename, StrategyTag tag = StrategyTag::NORMAL);
+	CFileWriter(const std::string& filename );
 
 	CFileWriter() = delete;
 	~CFileWriter();
